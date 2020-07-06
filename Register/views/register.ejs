@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <title>Register</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <form action="/" method="POST" id=myform name="myform" onsubmit="return my()">
+
+        <h1>Register</h1>
+        <hr>
+        <label for="name"><b>Name</b></label>
+        <input type="text" placeholder="Enter Name" name="name" id="name"> required<br>
+
+        <label for="email"><b>Email</b></label>
+        <input type="email" placeholder="Enter Email" name="email" id="email"> required<br>
+
+        <label for="ph"><b>Phoneno</b></label>
+        <input type="number" placeholder="Enter PhoneNo" name="Phoneno" id="PhoneNo"> required<br>
+
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" id="psw"> required<br>
+
+        <button type="submit" class="registerbtn">Register</button>
+        <p id="required"></p>
+        <p id="length"></p>
+
+    </form>
+</body>
+<script>
+    var email = $("#myform input[name=email]").text()
+    var phoneno = $("#myform input[name=phoneno]").text()
+
+    /*  function my() {
+
+          var name = $("#mform input[name=name]").val()
+          var email = $("#myform input[name=email]").val()
+          var phoneno = $("#myform input[name=phoneno]").val()
+          var password = $("#myform input[name=password]").val()
+          if (name == "" || email == "" || phoneno == "" || password == "") {
+              $("#required").text("*All fields are required")
+              return false
+          }
+          // if (name.length < 3 || name.length > 4) {
+          // $("#length").text("name should be max 4 letters min 3 letters")
+          return false
+          // }
+          //if (phoneno.length < 4 || phoneno.length > 12) {
+          // $("#length").text("phoneNo should be max 12  numbers min 44 numbers")
+          //}
+          //if (password.length < 4 || password.length > 8) {
+          // $("#length").text("password should be max 8 letters min 8 letters")
+          //}
+    }*/
+</script>
+
+</html>
