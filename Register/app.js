@@ -103,7 +103,7 @@ passport.use(new LocalStrategy({
     function(username, password, done) {
         console.log(username)
         console.log(password)
-        register.findOne({ username: username }, function(err, user) {
+        register.findOne({ email: username }, function(err, user) {
             console.log(user)
             if (err) { return done(err); }
             if (!user) {
