@@ -4,62 +4,110 @@
     <title>Register</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+<style>
+    .contain {
+        width: 25%;
+        margin: 5%;
+        margin-left: 35%;
+    }
+    
+    form {
+        padding: 5%;
+        border: 1px solid blueviolet;
+        width: 110%;
+    }
+    
+    #name {
+        margin: 4%;
+        margin-left: 9%;
+    }
+    
+    #email {
+        margin: 4%;
+        margin-left: 9%;
+    }
+    
+    #psw {
+        margin: 4%;
+        margin-left: 2%;
+    }
+    
+    #ph {
+        margin: 4%;
+        margin-left: 4%;
+    }
+    
+    #lengthn {
+        color: red;
+    }
+    
+    #lengthp {
+        color: red;
+    }
+    
+    #lengthpw {
+        color: red;
+    }
+    
+    #required {
+        color: red;
+    }
+</style>
 
 <body>
-    <form action="/" method="POST" id=myform name="myform" onsubmit="return my()">
+    <div class="contain">
+        <form action="/" method="POST" id=myform name="myform" onsubmit="return my()">
+            <h1>Register</h1>
+            <hr>
+            <label for="name"><b>Name</b></label>
+            <input type="text" placeholder="Enter Name" name="name" id="name" required><br>
+            <p id="lengthn"></p>
 
-        <h1>Register</h1>
-        <hr>
-        <label for="name"><b>Name</b></label>
-        <input type="text" placeholder="Enter Name" name="name" id="name" required><br>
-        <p id="lengthn"></p>
+            <label for="email"><b>Email</b></label>
+            <input type="email" placeholder="Enter Email" name="email" id="email" required><br>
 
-        <label for="email"><b>Email</b></label>
-        <input type="email" placeholder="Enter Email" name="email" id="email" required><br>
-
-        <label for="ph"><b>Phoneno</b></label>
-        <input type="number" placeholder="Enter PhoneNo" name="Phoneno" id="ph" required><br>
-        <p id="lengthp"></p>
-
-
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="password" id="psw" required> <br>
-        <p id="lengthpw"></p>
-        <p id="required"></p>
-        <button type="submit" id="submit" class="registerbtn">Register</button>
+            <label for="ph"><b>Phoneno</b></label>
+            <input type="number" placeholder="Enter PhoneNo" name="Phoneno" id="ph" required><br>
+            <p id="lengthp"></p>
 
 
-    </form>
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" id="psw" required> <br>
+            <p id="lengthpw"></p>
+            <p id="required"></p>
+            <button type="submit" id="submit" class="registerbtn">Register</button>
+        </form>
+    </div>
 </body>
 <script>
-    $('#required').text("hi")
     $('#submit').on('click', function() {
         valid = true;
 
         if (valid && $('#name').val() == '') {
             $('#required').text("please enter your name");
             valid = false;
+        } else if ($('#name').val().length < 2 || $('#name').val().length > 4) {
+            $('#lengthn').text("Name minimum character should 3 and maximum character should 4")
         }
 
         if (valid && $('#email').val() == '') {
             $('#required').text("please enter your address");
             valid = false;
         }
-        if (valid && $('#pwd').val() == '') {
+        if (valid && $('#psw').val() == '') {
             $('#required').text("please enter your password");
             valid = false;
         }
+
         if (valid && $('#ph').val() == '') {
             $('#required').text("please enter your phoneNO");
             valid = false;
         }
-        if ($('#name').val().length < 2 || $('#name').val().length > 4) {
-            $('#lengthn').text("Name minimum character should 3 and maximum character should 4")
-        }
-        if ($('#ph').val().toString().length < 4 || $('#ph').val().toString().length > 12) {
+
+        if ($('#ph').val() != '' && $('#ph').val().toString().length < 4 || $('#ph').val().toString().length > 12) {
             $('#lengthp').text("PhoneNO minimum character should 4 and maximum character should 12")
         }
-        if ($('#psw').val().length < 4 || $('#psw').val().length > 8) {
+        if ($('#psw').val() != '' && $('#psw').val().length < 4 || $('#psw').val().length > 8) {
             $('#lengthpw').text("password minimum character should 4 and maximum character should 8")
         }
 
