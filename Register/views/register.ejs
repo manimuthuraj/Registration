@@ -12,48 +12,59 @@
         <hr>
         <label for="name"><b>Name</b></label>
         <input type="text" placeholder="Enter Name" name="name" id="name" required><br>
+        <p id="lengthn"></p>
 
         <label for="email"><b>Email</b></label>
         <input type="email" placeholder="Enter Email" name="email" id="email" required><br>
 
         <label for="ph"><b>Phoneno</b></label>
-        <input type="number" placeholder="Enter PhoneNo" name="Phoneno" id="PhoneNo" required><br>
+        <input type="number" placeholder="Enter PhoneNo" name="Phoneno" id="ph" required><br>
+        <p id="lengthp"></p>
 
 
         <label for="psw"><b>Password</b></label>
         <input type="password" placeholder="Enter Password" name="password" id="psw" required> <br>
-
-        <button type="submit" class="registerbtn">Register</button>
+        <p id="lengthpw"></p>
         <p id="required"></p>
-        <p id="length"></p>
+        <button type="submit" id="submit" class="registerbtn">Register</button>
+
 
     </form>
 </body>
 <script>
-    var email = $("#myform input[name=email]").text()
-    var phoneno = $("#myform input[name=phoneno]").text()
+    $('#required').text("hi")
+    $('#submit').on('click', function() {
+        valid = true;
 
-    /*  function my() {
+        if (valid && $('#name').val() == '') {
+            $('#required').text("please enter your name");
+            valid = false;
+        }
 
-          var name = $("#mform input[name=name]").val()
-          var email = $("#myform input[name=email]").val()
-          var phoneno = $("#myform input[name=phoneno]").val()
-          var password = $("#myform input[name=password]").val()
-          if (name == "" || email == "" || phoneno == "" || password == "") {
-              $("#required").text("*All fields are required")
-              return false
-          }
-          // if (name.length < 3 || name.length > 4) {
-          // $("#length").text("name should be max 4 letters min 3 letters")
-          return false
-          // }
-          //if (phoneno.length < 4 || phoneno.length > 12) {
-          // $("#length").text("phoneNo should be max 12  numbers min 44 numbers")
-          //}
-          //if (password.length < 4 || password.length > 8) {
-          // $("#length").text("password should be max 8 letters min 8 letters")
-          //}
-    }*/
+        if (valid && $('#email').val() == '') {
+            $('#required').text("please enter your address");
+            valid = false;
+        }
+        if (valid && $('#pwd').val() == '') {
+            $('#required').text("please enter your password");
+            valid = false;
+        }
+        if (valid && $('#ph').val() == '') {
+            $('#required').text("please enter your phoneNO");
+            valid = false;
+        }
+        if ($('#name').val().length < 2 || $('#name').val().length > 4) {
+            $('#lengthn').text("Name minimum character should 3 and maximum character should 4")
+        }
+        if ($('#ph').val().toString().length < 4 || $('#ph').val().toString().length > 12) {
+            $('#lengthp').text("PhoneNO minimum character should 4 and maximum character should 12")
+        }
+        if ($('#psw').val().length < 4 || $('#psw').val().length > 8) {
+            $('#lengthpw').text("password minimum character should 4 and maximum character should 8")
+        }
+
+        return valid;
+    });
 </script>
 
 </html>
