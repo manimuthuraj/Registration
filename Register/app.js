@@ -9,10 +9,28 @@ app.set("view engine", "ejs")
 mongoose.connect("mongodb+srv://yelp:yelp@cluster0-lfy4s.mongodb.net/yelp?retryWrites=true&w=majority", { useNewUrlParser: true })
 
 var registerSchema = new mongoose.Schema({
-    name: String,
-    email: String,
-    Phoneno: String,
-    password: String
+    name: {
+        type: String,
+        required: true,
+        minlength: 3,
+        maxlength: 4
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    Phoneno: {
+        type: String,
+        required: true,
+        minlength: 4,
+        maxlength: 12
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 4,
+        maxlength: 8
+    },
 })
 var register = mongoose.model("register", registerSchema)
 
@@ -21,13 +39,25 @@ app.get("/", function(req, res) {
 })
 
 app.post("/", function(req, res) {
-    register.create({ name: req.body.name, email: req.body.email, Phoneno: req.body.Phoneno, password: req.body.password }, function(err, reg) {
-        if (err) {
-            console.log(err)
-        } else {
+
+    async function saveRegister() {
+        const game = new register({
+            name: req.body.name,
+            email: req.body.email,
+            Phoneno: req.body.Phoneno,
+            password: req.body.password
+        });
+
+        try {
+            const result = await game.save();
+            console.log(result);
             res.redirect("/")
+        } catch (err) {
+            console.log(err.message)
+            res.render("register", { err: err })
         }
-    })
+    }
+    saveRegister();
 })
 
 app.listen(3000, function() {
