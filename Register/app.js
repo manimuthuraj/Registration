@@ -50,15 +50,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser(function(req, user, done) {
-    done(null, user.user_id);
+    done(null, user._id);
 });
 
 passport.deserializeUser(function(user_id, done) {
-    getUserInfo(user_id).then(function(user) {
-        return done(null, user);
-    }, function(err) {
-        return done(err, null);
-    });
+    console.log('user_id...', user_id);
+    // getUserInfo(user_id).then(function(user) {
+    // return done(null, user);
+    // }, function(err) {
+    // return done(err, null);
+    // });
 });
 
 app.get("/", function(req, res) {
@@ -109,7 +110,8 @@ passport.use(new LocalStrategy({
             if (!user) {
                 return done(null, false);
             }
-            if (!user.validPassword(password)) {
+
+            if (password != user.password) {
                 return done(null, false);
             }
             return done(null, user);
@@ -120,7 +122,7 @@ passport.use(new LocalStrategy({
 
 app.post('/login',
     passport.authenticate('local', {
-        successRedirect: '/sucess',
+        successRedirect: '/',
         failureRedirect: '/fail',
         failureFlash: true
     })
