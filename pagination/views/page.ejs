@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>page</title>
+    <script src="//code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .block {
+        width: 18%;
+        display: inline-block;
+        text-align: center;
+        ;
+        margin: 10px;
+        height: 100px;
+        padding-top: 15px;
+        box-sizing: border-box;
+        display: none;
+    }
+    
+    .block.active {
+        display: inline-block;
+    }
+    
+    .pagination {
+        background: #666;
+        color: white;
+        width: 980px;
+        margin: auto;
+        text-align: center;
+        padding: 10px 0;
+        max-width: 100%;
+    }
+    
+    .page {
+        width: 20px;
+        display: inline-block;
+        text-align: center;
+        border: 1px solid white;
+        margin: 0 2px;
+        cursor: pointer;
+    }
+    
+    .page.active {
+        background: black;
+    }
+</style>
+
+<body>
+    <%std.forEach(function(std1){%>
+        <div class="block">
+            <p>name:
+                <%=std1.name%>
+                    email:
+                    <%=std1.email%>
+                        age:
+                        <%=std1.age%>
+            </p>
+        </div>
+
+        <%})%>
+            <button><a href="/add">click here to add</a></button>
+</body>
+<script>
+    console.log($('.block'))
+    var itemperpage = 3
+    var block = $(".block")
+    var blockcount = block.length
+    var nopage = Math.ceil(blockcount / itemperpage)
+
+
+    $('body').append("<div class='pagination'></div>");
+    for (var i = 1; i <= nopage; i++) {
+        $('.pagination').append("<div class='page'>" + i + "</div>");
+    }
+
+    $(".page:first-child").addClass('active');
+    $('.block').filter(function(index) {
+        return index < nopage;
+    }).addClass('active');
+
+
+    $('body').delegate('.page', 'click', function() {
+        var page_index = $(this).index();
+        var start = page_index * nopage;
+        console.log(start)
+        block.removeClass('active');
+        jQuery(".page").removeClass('active');
+        jQuery(".page").eq(page_index).addClass('active');
+        for (var j = 0; j < nopage; j++) {
+            block.eq(start + j).addClass('active');
+        }
+
+    });
+</script>
+
+</html>
