@@ -7,30 +7,12 @@
 </head>
 
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-    }
-    
-    .block {
-        width: 18%;
-        display: inline-block;
-        text-align: center;
-        ;
-        margin: 10px;
-        height: 100px;
-        padding-top: 15px;
-        box-sizing: border-box;
-        display: none;
-    }
-    
-    .block.active {
+    .active {
         display: inline-block;
     }
     
     .pagination {
-        background: #666;
-        color: white;
+        color: black;
         width: 980px;
         margin: auto;
         text-align: center;
@@ -38,23 +20,18 @@
         max-width: 100%;
     }
     
-    .page {
-        width: 20px;
-        display: inline-block;
-        text-align: center;
-        border: 1px solid white;
-        margin: 0 2px;
-        cursor: pointer;
+    .active {
+        color: red;
     }
     
-    .page.active {
-        background: black;
+    .disabled {
+        display: none;
     }
 </style>
 
 <body>
-    <%std.forEach(function(std1){%>
-        <div class="block">
+    <%stds.forEach(function(std1){%>
+        <div class="">
             <p>name:
                 <%=std1.name%>
                     email:
@@ -65,39 +42,45 @@
         </div>
 
         <%})%>
-            <button><a href="/add">click here to add</a></button>
+            <button><a href="/add/new">click here to add </a></button>
+
+            <% if (pages > 0) { %>
+                <ul class="pagination">
+                    <% if (current == 1) { %>
+                        <li class="disabled"><a>First</a></li>
+                        <% } else { %>
+                            <li><a href="/1">First</a></li>
+                            <% } %>
+                                <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                                    <% if (i !== 1) { %>
+                                        <li class="disabled"><a>...</a></li>
+                                        <% } %>
+                                            <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                                                <% if (i == current) { %>
+                                                    <li class="active">
+                                                        <a>
+                                                            <%= i %>
+                                                        </a>
+                                                    </li>
+                                                    <% } else { %>
+                                                        <li>
+                                                            <a href="/<%= i %>">
+                                                                <%= i %>
+                                                            </a>
+                                                        </li>
+                                                        <% } %>
+                                                            <% if (i == Number(current) + 4 && i < pages) { %>
+                                                                <li class="disabled"><a>...</a></li>
+                                                                <% } %>
+                                                                    <% } %>
+                                                                        <% if (current == pages) { %>
+                                                                            <li class="disabled"><a>Last</a></li>
+                                                                            <% } else { %>
+                                                                                <li><a href="/<%= pages %>">Last</a></li>
+                                                                                <% } %>
+                </ul>
+                <% } %>
+                    </div>
 </body>
-<script>
-    console.log($('.block'))
-    var itemperpage = 3
-    var block = $(".block")
-    var blockcount = block.length
-    var nopage = Math.ceil(blockcount / itemperpage)
-
-
-    $('body').append("<div class='pagination'></div>");
-    for (var i = 1; i <= nopage; i++) {
-        $('.pagination').append("<div class='page'>" + i + "</div>");
-    }
-
-    $(".page:first-child").addClass('active');
-    $('.block').filter(function(index) {
-        return index < nopage;
-    }).addClass('active');
-
-
-    $('body').delegate('.page', 'click', function() {
-        var page_index = $(this).index();
-        var start = page_index * nopage;
-        console.log(start)
-        block.removeClass('active');
-        jQuery(".page").removeClass('active');
-        jQuery(".page").eq(page_index).addClass('active');
-        for (var j = 0; j < nopage; j++) {
-            block.eq(start + j).addClass('active');
-        }
-
-    });
-</script>
 
 </html>
