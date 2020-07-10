@@ -14,24 +14,17 @@ var stdSchema = new mongoose.Schema({
 
 var std = mongoose.model("std", stdSchema)
 
-app.get("/:page", function(req, res) {
+app.get("/:page", async function(req, res) {
     var perPage = 3 //no of items to be displaed per page
     var page = req.params.page || 1 //page no
-    std
-        .find({})
-        .skip((perPage * page) - perPage) //items to be skip not fetech from db
-        .limit(perPage) // no of items per page
-        .exec(function(err, stds) {
-            std.count().exec(function(err, count) { // count total no of items iin db
-                if (err) return next(err)
-                res.render('page.ejs', {
-                    stds: stds, //data
-                    current: page, // current pageno
-                    pages: Math.ceil(count / perPage) // total no of pages total count/items per page
-                })
-            })
-        })
 
+    let stds = await std.find({}).skip((perPage * page) - perPage).limit(perPage)
+    let count = await std.count();
+    res.render('page.ejs', {
+        stds: stds, //data
+        current: page, // current pageno
+        pages: Math.ceil(count / perPage) // total no of pages total count/items per page
+    })
 })
 
 app.get("/add/new", function(req, res) {
